@@ -1,14 +1,204 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 8 Codes | Know Yourself</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;500;700&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+
+    <style>
+        /* Base Reset & Variables */
+        :root {
+            --bg-color: #000000;
+            --text-main: #FFFFFF;
+            --text-muted: #888888;
+            --border-color: #333333;
+            --border-focus: #FFFFFF;
+            --accent-color: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Barlow', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .diagnosis-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .privacy-notice {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--text-muted);
+        }
+
+        .optional-tag {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        input {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 14px 16px;
+            font-size: 1rem;
+            font-family: 'Barlow', sans-serif;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        input::placeholder {
+            color: #444444;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-main);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 32px 0;
+            width: 100%;
+        }
+
+        /* Flatpickr 커스텀 오버라이드 (폰트 일치화) */
+        .flatpickr-calendar {
+            font-family: 'Barlow', sans-serif !important;
+            background: #111 !important;
+            border: 1px solid #333 !important;
+        }
+    </style>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+    <div class="diagnosis-container">
+        <h1>The 8 Codes | Strategic Diagnosis</h1>
+        
+        <div class="subtitle">Know Yourself. Obtain Your Blueprint.</div>
+        <div class="description">
+            Human data analysis requires precision. Enter your temporal coordinates to generate your objective blueprint.
+        </div>
+        <div class="privacy-notice">
+            > Your data is strictly protected and used ONLY for this analysis.
+        </div>
+
+        <div class="divider"></div>
+
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="name">Name / Nickname <span class="optional-tag">(Optional)</span></label>
+                <input type="text" id="name" name="name" placeholder="Enter your designation">
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="required">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="name@domain.com">
+            </div>
+
+            <div class="form-group">
+                <label for="dob" class="required">Date & Time of Birth</label>
+                <input type="text" id="dob" name="dob" required placeholder="YYYY-MM-DD HH:MM">
+            </div>
+
+            <button type="submit">Initialize Diagnosis</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // 날짜 입력 필드에 Flatpickr 적용
+        flatpickr("#dob", {
+            enableTime: true,        // 시간 입력 활성화
+            dateFormat: "Y-m-d H:i", // 데이터 포맷 (예: 2026-03-15 14:30)
+            time_24hr: true,         // 24시간제 적용 (보다 전문적인 느낌)
+            disableMobile: true,     // 모바일에서도 네이티브 대신 이 UI를 강제 적용
+            locale: "en"             // 무조건 영어로 강제 출력
+        });
+    </script>
 </body>
 </html>
