@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +7,38 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;500;700&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <link rel="stylesheet" id="flatpickr-theme" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
 
     <style>
         /* Base Reset & Variables */
-        :root {
+        :root[data-theme="dark"] {
             --bg-color: #000000;
             --text-main: #FFFFFF;
             --text-muted: #888888;
             --border-color: #333333;
             --border-focus: #FFFFFF;
             --accent-color: #FFFFFF;
+            --input-placeholder: #444444;
+            --flatpickr-bg: #111;
+            --flatpickr-border: #333;
+            --toggle-bg: #222;
+            --toggle-border: #444;
+        }
+
+        :root[data-theme="light"] {
+            --bg-color: #F5F5F0;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border-color: #CCCCCC;
+            --border-focus: #111111;
+            --accent-color: #111111;
+            --input-placeholder: #AAAAAA;
+            --flatpickr-bg: #fff;
+            --flatpickr-border: #ccc;
+            --toggle-bg: #e0e0e0;
+            --toggle-border: #bbb;
         }
 
         body {
@@ -33,6 +52,33 @@
             align-items: center;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--toggle-bg);
+            border: 1px solid var(--toggle-border);
+            color: var(--text-main);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, border-color 0.3s;
+            padding: 0;
+            margin: 0;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--border-color);
+            border-color: var(--text-muted);
         }
 
         .diagnosis-container {
@@ -110,18 +156,18 @@
         input:focus {
             outline: none;
             border-color: var(--border-focus);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(128, 128, 128, 0.2);
         }
 
         input::placeholder {
-            color: #444444;
+            color: var(--input-placeholder);
         }
 
-        button {
+        button[type="submit"] {
             width: 100%;
             background-color: var(--text-main);
             color: var(--bg-color);
-            border: none;
+            border: 1px solid var(--text-main);
             padding: 16px;
             font-size: 1.1rem;
             font-weight: 700;
@@ -130,10 +176,10 @@
             cursor: pointer;
             margin-top: 16px;
             border-radius: 4px;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
-        button:hover {
+        button[type="submit"]:hover {
             background-color: transparent;
             color: var(--text-main);
             border: 1px solid var(--text-main);
@@ -146,19 +192,21 @@
             width: 100%;
         }
 
-        /* Flatpickr 커스텀 오버라이드 (폰트 일치화) */
+        /* Flatpickr 커스텀 오버라이드 */
         .flatpickr-calendar {
             font-family: 'Barlow', sans-serif !important;
-            background: #111 !important;
-            border: 1px solid #333 !important;
+            background: var(--flatpickr-bg) !important;
+            border: 1px solid var(--flatpickr-border) !important;
         }
     </style>
 </head>
 <body>
 
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">☀️</button>
+
     <div class="diagnosis-container">
         <h1>The 8 Codes | Strategic Diagnosis</h1>
-        
+
         <div class="subtitle">Know Yourself. Obtain Your Blueprint.</div>
         <div class="description">
             Human data analysis requires precision. Enter your temporal coordinates to generate your objective blueprint.
@@ -191,13 +239,38 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
+        const html = document.documentElement;
+        const toggleBtn = document.getElementById('themeToggle');
+        const flatpickrThemeLink = document.getElementById('flatpickr-theme');
+
+        // 저장된 테마 불러오기
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        setTheme(savedTheme);
+
+        toggleBtn.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                toggleBtn.textContent = '☀️';
+                flatpickrThemeLink.href = 'https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css';
+            } else {
+                toggleBtn.textContent = '🌙';
+                flatpickrThemeLink.href = 'https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/light.css';
+            }
+        }
+
         // 날짜 입력 필드에 Flatpickr 적용
         flatpickr("#dob", {
-            enableTime: true,        // 시간 입력 활성화
-            dateFormat: "Y-m-d H:i", // 데이터 포맷 (예: 2026-03-15 14:30)
-            time_24hr: true,         // 24시간제 적용 (보다 전문적인 느낌)
-            disableMobile: true,     // 모바일에서도 네이티브 대신 이 UI를 강제 적용
-            locale: "en"             // 무조건 영어로 강제 출력
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            disableMobile: true,
+            locale: "en"
         });
     </script>
 </body>
